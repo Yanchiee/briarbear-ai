@@ -358,8 +358,8 @@
   <script>
     // ── Supabase Configuration ──
     // Replace these with your actual Supabase project credentials
-    const SUPABASE_URL = 'YOUR_SUPABASE_URL';
-    const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+    const SUPABASE_URL = 'https://fdhynvbgpbfmpjfvcbec.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZkaHludmJncGJmbXBqZnZjYmVjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwNTk4MjcsImV4cCI6MjA4ODYzNTgyN30.cNjvdJeXoQNFLzIr-UN-AxvPllmOOqEGnazOK7XAUF8';
 
     // ── Google Sheets Configuration ──
     // Replace with your Google Apps Script Web App URL
@@ -372,11 +372,11 @@
 
     // Submit to Supabase
     async function submitToSupabase(data) {
-      if (SUPABASE_URL === 'YOUR_SUPABASE_URL') {
+      if (SUPABASE_ANON_KEY === 'YOUR_SUPABASE_ANON_KEY') {
         console.warn('Supabase not configured. Skipping Supabase submission.');
         return { ok: true, skipped: true };
       }
-      const res = await fetch(`${SUPABASE_URL}/rest/v1/contact_submissions`, {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/Form_Submissions`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
