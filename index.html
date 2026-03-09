@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BriarBear — The Future of Chatbots. Built on Human Data.</title>
-  <meta name="description" content="BriarBear builds proprietary AI Chatbots and intelligent systems with human-curated data. Real AI for real use.">
+  <title>BriarBear — The Future of AI Products. Built on Human Data.</title>
+  <meta name="description" content="BriarBear builds proprietary AI products and intelligent systems with human-curated data. Real AI for real use.">
   <link rel="icon" type="image/png" href="https://briarbear.ai/wp-content/uploads/elementor/thumbs/BriarBear-Transparent-ra98r40wv96q6i5lt8x0b2mea40eauiddcsdwnaqxs.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg-primary: #080808;
@@ -24,8 +24,8 @@
       --text-primary: #f0ede8;
       --text-secondary: #a8a299;
       --text-muted: #605c54;
-      --font-display: 'Cormorant Garamond', Georgia, serif;
-      --font-body: 'Outfit', system-ui, sans-serif;
+      --font-display: 'DM Serif Display', Georgia, serif;
+      --font-body: 'Inter', system-ui, sans-serif;
       --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
     }
 
@@ -45,17 +45,20 @@
       line-height: 1.7;
     }
 
-    /* ── Grain Overlay ── */
-    body::before {
-      content: '';
+    /* ── Smoke Background Canvas ── */
+    #smoke-bg {
       position: fixed;
       inset: 0;
-      z-index: 9999;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
       pointer-events: none;
-      opacity: 0.025;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      background-repeat: repeat;
-      background-size: 256px 256px;
+    }
+
+    /* All content sits above the smoke */
+    #loader, .site-header, .mobile-overlay, .hero, .section, .section-divider, .cta-section, .site-footer {
+      position: relative;
+      z-index: 1;
     }
 
     /* ── Loader ── */
@@ -74,10 +77,10 @@
     .loader-mark {
       font-family: var(--font-display);
       font-size: 2rem;
-      font-weight: 700;
+      font-weight: 400;
       color: var(--gold);
       margin-bottom: 32px;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.01em;
       animation: loaderPulse 1.8s ease-in-out infinite;
     }
     @keyframes loaderPulse {
@@ -144,8 +147,8 @@
     .header-logo-text {
       font-family: var(--font-display);
       font-size: 1.3rem;
-      font-weight: 600;
-      letter-spacing: 0.02em;
+      font-weight: 400;
+      letter-spacing: 0.01em;
     }
 
     .nav-toggle {
@@ -225,7 +228,7 @@
     .mobile-overlay a {
       font-family: var(--font-display);
       font-size: 2rem;
-      font-weight: 500;
+      font-weight: 400;
       color: var(--text-primary);
       text-decoration: none;
       transition: color 0.3s ease;
@@ -291,8 +294,8 @@
     .hero-heading {
       font-family: var(--font-display);
       font-size: clamp(3rem, 6.5vw, 5.5rem);
-      font-weight: 600;
-      line-height: 1.0;
+      font-weight: 400;
+      line-height: 1.05;
       letter-spacing: -0.01em;
       color: var(--text-primary);
       margin-bottom: 28px;
@@ -305,12 +308,12 @@
       color: var(--gold);
     }
     .hero-tagline {
-      font-size: clamp(1rem, 1.6vw, 1.15rem);
+      font-size: clamp(0.95rem, 1.5vw, 1.1rem);
       color: var(--text-secondary);
       max-width: 520px;
       margin: 0 auto 48px;
       line-height: 1.75;
-      font-weight: 300;
+      font-weight: 400;
       opacity: 0;
       transform: translateY(20px);
       animation: heroIn 0.8s var(--ease-out-expo) 1.0s forwards;
@@ -477,17 +480,17 @@
     .section-heading {
       font-family: var(--font-display);
       font-size: clamp(2.2rem, 4.5vw, 3.6rem);
-      font-weight: 600;
-      line-height: 1.08;
+      font-weight: 400;
+      line-height: 1.12;
       letter-spacing: -0.01em;
       margin-bottom: 20px;
     }
     .section-body {
-      font-size: 1.02rem;
+      font-size: 1rem;
       color: var(--text-secondary);
-      line-height: 1.8;
+      line-height: 1.75;
       max-width: 580px;
-      font-weight: 300;
+      font-weight: 400;
     }
 
     /* Scroll reveal */
@@ -504,7 +507,7 @@
     .reveal-d5 { transition-delay: 0.40s; }
 
     /* ── Projects ── */
-    .projects { background: var(--bg-primary); }
+    .projects { background: rgba(8, 8, 8, 0.85); }
     .projects .section-label,
     .projects .section-heading { text-align: center; }
     .projects .section-label { display: block; }
@@ -571,7 +574,7 @@
     .project-card-title {
       font-family: var(--font-display);
       font-size: 1.65rem;
-      font-weight: 600;
+      font-weight: 400;
       margin-bottom: 10px;
     }
     .project-card-desc {
@@ -597,7 +600,7 @@
 
     /* ── About ── */
     .about {
-      background: var(--bg-elevated);
+      background: rgba(15, 15, 15, 0.88);
     }
     .about-grid {
       display: grid;
@@ -627,7 +630,7 @@
     .stat-number {
       font-family: var(--font-display);
       font-size: 2.6rem;
-      font-weight: 600;
+      font-weight: 400;
       color: var(--gold);
       line-height: 1;
       margin-bottom: 8px;
@@ -641,7 +644,7 @@
     }
 
     /* ── Values ── */
-    .values { background: var(--bg-primary); }
+    .values { background: rgba(8, 8, 8, 0.85); }
     .values .section-label,
     .values .section-heading { text-align: center; }
     .values .section-label { display: block; }
@@ -678,7 +681,7 @@
     .value-card h3 {
       font-family: var(--font-display);
       font-size: 1.35rem;
-      font-weight: 600;
+      font-weight: 400;
       margin-bottom: 10px;
     }
     .value-card p {
@@ -713,14 +716,14 @@
 
     /* ── Footer ── */
     .site-footer {
-      background: var(--bg-elevated);
+      background: rgba(15, 15, 15, 0.92);
       border-top: 1px solid rgba(200,160,74,0.04);
       padding: 64px 24px 36px;
     }
     .footer-inner { max-width: 1120px; margin: 0 auto; }
     .footer-top {
       display: grid;
-      grid-template-columns: 2.2fr 1fr 1fr 1fr;
+      grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
       gap: 48px;
       margin-bottom: 52px;
     }
@@ -734,7 +737,7 @@
     .footer-brand-logo span {
       font-family: var(--font-display);
       font-size: 1.15rem;
-      font-weight: 600;
+      font-weight: 400;
     }
     .footer-brand p {
       font-size: 0.86rem;
@@ -808,6 +811,9 @@
 </head>
 <body>
 
+  <!-- Smoke Background -->
+  <canvas id="smoke-bg"></canvas>
+
   <!-- Loader -->
   <div id="loader">
     <div class="loader-mark">BriarBear</div>
@@ -852,8 +858,8 @@
     <div class="hero-bg"></div>
     <div class="hero-content">
       <span class="hero-label">Proprietary AI Systems</span>
-      <h1 class="hero-heading">The Future of Chatbots.<br>Built on <em>Human Data.</em></h1>
-      <p class="hero-tagline">We create proprietary AI Chatbots and intelligent systems with human-curated data. Designed for real use, not demos.</p>
+      <h1 class="hero-heading">The Future of AI Products.<br>Built on <em>Human Data.</em></h1>
+      <p class="hero-tagline">We create proprietary AI products and intelligent systems with human-curated data. Designed for real use, not demos.</p>
       <div class="hero-ctas">
         <a href="#projects" class="btn-primary">
           Explore Our Projects
@@ -863,7 +869,7 @@
       </div>
     </div>
     <div class="hero-bear">
-      <img src="./assets/bear.jpg" alt="BriarBear — Majestic brown bear">
+      <img src="./assets/Bear2.png" alt="BriarBear — Majestic brown bear">
     </div>
     <div class="scroll-indicator">
       <span>Scroll</span>
@@ -885,9 +891,9 @@
             <img src="./screenshots/Yibby.png" alt="Yibby.ai platform" loading="lazy">
           </div>
           <div class="project-card-content">
-            <span class="project-card-tag">AI Chatbot</span>
+            <span class="project-card-tag">Gift Discovery</span>
             <h3 class="project-card-title">Yibby.ai</h3>
-            <p class="project-card-desc">An intelligent AI chatbot that understands context and delivers human-quality conversations and recommendations. Built on curated data for reliable, real-world use.</p>
+            <p class="project-card-desc">A smart gift discovery platform that matches emotional intent with curated recommendations. Find meaningful presents organized by relationships, occasions, and the feelings you want to express.</p>
             <span class="project-card-link">
               Visit Yibby.ai
               <svg viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -900,9 +906,9 @@
             <img src="./screenshots/Arca.png" alt="Arca.ph platform" loading="lazy">
           </div>
           <div class="project-card-content">
-            <span class="project-card-tag">Platform</span>
+            <span class="project-card-tag">AI Community</span>
             <h3 class="project-card-title">Arca.ph</h3>
-            <p class="project-card-desc">A next-generation platform powered by proprietary AI. Solving complex problems with clarity, reliability, and care for users who need results they can trust.</p>
+            <p class="project-card-desc">An AI upskilling community for Filipino professionals, offering hands-on training in AI tools and pathways to freelance work. Learn product management, design, research, and automation.</p>
             <span class="project-card-link">
               Visit Arca.ph
               <svg viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -990,7 +996,7 @@
     <div class="section-inner">
       <span class="section-label reveal">Get Started</span>
       <h2 class="section-heading reveal reveal-d1">Ready to Build<br>Something Real?</h2>
-      <p class="section-body reveal reveal-d2">Whether you need a custom AI chatbot or an intelligent system built on quality data, we'd love to hear from you.</p>
+      <p class="section-body reveal reveal-d2">Whether you need a custom AI product or an intelligent system built on quality data, we'd love to hear from you.</p>
       <div class="cta-buttons reveal reveal-d3">
         <a href="mailto:hello@briarbear.ai" class="btn-primary">
           Contact Us
@@ -1020,6 +1026,13 @@
           </ul>
         </div>
         <div class="footer-col">
+          <h4>Blogs</h4>
+          <ul>
+            <li><a href="https://yibby.ai/blog" target="_blank" rel="noopener">Yibby Blog</a></li>
+            <li><a href="https://arca.ph/blog" target="_blank" rel="noopener">Arca Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
           <h4>Company</h4>
           <ul>
             <li><a href="#about">About</a></li>
@@ -1040,7 +1053,7 @@
           <a href="#" aria-label="X / Twitter">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
           </a>
-          <a href="#" aria-label="LinkedIn">
+          <a href="https://www.linkedin.com/company/briarbear/" target="_blank" rel="noopener" aria-label="LinkedIn">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
           </a>
         </div>
@@ -1122,6 +1135,104 @@
         if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
       });
     });
+
+    /* ── WebGL Smoke Background ── */
+    (function() {
+      const canvas = document.getElementById('smoke-bg');
+      if (!canvas) return;
+      const gl = canvas.getContext('webgl2');
+      if (!gl) return;
+
+      // BriarBear brand gold: #c8a04a → normalized RGB
+      const SMOKE_COLOR = [200/255, 160/255, 74/255];
+
+      const vertSrc = `#version 300 es
+precision highp float;
+in vec4 position;
+void main(){gl_Position=position;}`;
+
+      const fragSrc = `#version 300 es
+precision highp float;
+out vec4 O;
+uniform float time;
+uniform vec2 resolution;
+uniform vec3 u_color;
+#define FC gl_FragCoord.xy
+#define R resolution
+#define T (time+660.)
+float rnd(vec2 p){p=fract(p*vec2(12.9898,78.233));p+=dot(p,p+34.56);return fract(p.x*p.y);}
+float noise(vec2 p){vec2 i=floor(p),f=fract(p),u=f*f*(3.-2.*f);return mix(mix(rnd(i),rnd(i+vec2(1,0)),u.x),mix(rnd(i+vec2(0,1)),rnd(i+1.),u.x),u.y);}
+float fbm(vec2 p){float t=.0,a=1.;for(int i=0;i<5;i++){t+=a*noise(p);p*=mat2(1,-1.2,.2,1.2)*2.;a*=.5;}return t;}
+void main(){
+  vec2 uv=(FC-.5*R)/R.y;
+  vec3 col=vec3(1);
+  uv.x+=.25;
+  uv*=vec2(2,1);
+  float n=fbm(uv*.28-vec2(T*.01,0));
+  n=noise(uv*3.+n*2.);
+  col.r-=fbm(uv+vec2(0,T*.015)+n);
+  col.g-=fbm(uv*1.003+vec2(0,T*.015)+n+.003);
+  col.b-=fbm(uv*1.006+vec2(0,T*.015)+n+.006);
+  col=mix(col,u_color,dot(col,vec3(.21,.71,.07)));
+  col=mix(vec3(.04),col,min(time*.1,1.));
+  col=clamp(col,.04,1.);
+  O=vec4(col,1);
+}`;
+
+      function compile(type, src) {
+        const s = gl.createShader(type);
+        gl.shaderSource(s, src);
+        gl.compileShader(s);
+        if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+          console.error(gl.getShaderInfoLog(s));
+        }
+        return s;
+      }
+
+      const vs = compile(gl.VERTEX_SHADER, vertSrc);
+      const fs = compile(gl.FRAGMENT_SHADER, fragSrc);
+      const prog = gl.createProgram();
+      gl.attachShader(prog, vs);
+      gl.attachShader(prog, fs);
+      gl.linkProgram(prog);
+      if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+        console.error(gl.getProgramInfoLog(prog));
+        return;
+      }
+
+      const buf = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,1,-1,-1,1,1,1,-1]), gl.STATIC_DRAW);
+      const pos = gl.getAttribLocation(prog, 'position');
+      gl.enableVertexAttribArray(pos);
+      gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+
+      const uRes = gl.getUniformLocation(prog, 'resolution');
+      const uTime = gl.getUniformLocation(prog, 'time');
+      const uColor = gl.getUniformLocation(prog, 'u_color');
+
+      function resize() {
+        const dpr = Math.max(1, window.devicePixelRatio * 0.5); // Half DPR for performance
+        canvas.width = window.innerWidth * dpr;
+        canvas.height = window.innerHeight * dpr;
+        gl.viewport(0, 0, canvas.width, canvas.height);
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      function loop(now) {
+        gl.clearColor(0, 0, 0, 1);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+        gl.useProgram(prog);
+        gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+        gl.uniform2f(uRes, canvas.width, canvas.height);
+        gl.uniform1f(uTime, now * 1e-3);
+        gl.uniform3fv(uColor, SMOKE_COLOR);
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+        requestAnimationFrame(loop);
+      }
+      requestAnimationFrame(loop);
+    })();
   </script>
 </body>
 </html>
