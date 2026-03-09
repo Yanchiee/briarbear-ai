@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -m uv run \"C:/Users/Nycna/.claude/plugins/cache/buildatscale-claude-code/nano-banana-pro/a5392463110c/skills/generate/scripts/image.py\" --prompt \"A photorealistic image of a large, majestic golden-brown grizzly bear sitting casually on green grass in a relaxed, almost human-like lounging pose, leaning back with legs spread out in front. Thick fluffy fur with warm golden-brown tones, lighter muzzle area, calm dignified expression. Natural outdoor background with dried brush, bushes, and a fence, soft bokeh blur. Soft natural overcast lighting. Chunky well-fed bear. Wildlife photography style, high quality photographic image.\" --reference \"c:/Users/Nycna/OneDrive/Desktop/Claude/BriarBear/assets/bear1.jpg\" --output \"c:/Users/Nycna/OneDrive/Desktop/Claude/BriarBear/assets/bear-generated.png\" --model pro --aspect landscape)",
+      "WebFetch(domain:yibby.ai)",
+      "WebFetch(domain:arca.ph)"
+    ]
+  }
+}

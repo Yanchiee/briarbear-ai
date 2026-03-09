@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yibby.ai — Smart Gift Discovery | BriarBear</title>
+  <meta name="description" content="Yibby is a smart gift discovery platform that matches emotional intent with curated recommendations. Find meaningful presents by how you feel.">
+  <link rel="icon" type="image/png" href="https://briarbear.ai/wp-content/uploads/elementor/thumbs/BriarBear-Transparent-ra98r40wv96q6i5lt8x0b2mea40eauiddcsdwnaqxs.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #080808;
+      --bg-elevated: #0f0f0f;
+      --bg-surface: #171717;
+      --bg-surface-hover: #1e1e1e;
+      --gold: #c8a04a;
+      --gold-light: #e2c36a;
+      --gold-dim: #8a6d2b;
+      --gold-muted: #a68b3c;
+      --gold-glow: rgba(200, 160, 74, 0.12);
+      --gold-glow-strong: rgba(200, 160, 74, 0.25);
+      --text-primary: #f0ede8;
+      --text-secondary: #a8a299;
+      --text-muted: #605c54;
+      --font-display: 'DM Serif Display', Georgia, serif;
+      --font-body: 'Inter', system-ui, sans-serif;
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      line-height: 1.7;
+    }
+
+    /* Header */
+    .site-header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 22px 40px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(8,8,8,0.95);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid rgba(200,160,74,0.06);
+    }
+    .header-logo {
+      display: flex; align-items: center; gap: 12px;
+      text-decoration: none; color: var(--text-primary);
+    }
+    .header-logo img { height: 34px; width: auto; }
+    .header-logo-text {
+      font-family: var(--font-display);
+      font-size: 1.3rem; font-weight: 400; letter-spacing: 0.01em;
+    }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: var(--gold); text-decoration: none;
+      font-size: 0.82rem; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      transition: color 0.3s ease, gap 0.4s var(--ease-out-expo);
+    }
+    .back-link:hover { color: var(--gold-light); gap: 12px; }
+    .back-link svg { width: 16px; height: 16px; }
+
+    /* Page Hero */
+    .page-hero {
+      padding: 160px 24px 80px;
+      text-align: center;
+      position: relative;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 45% at 50% 35%, rgba(200,160,74,0.04) 0%, transparent 70%);
+    }
+    .page-hero-content { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; }
+    .page-tag {
+      display: inline-block;
+      font-size: 0.65rem; font-weight: 600;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--gold); background: var(--gold-glow);
+      padding: 6px 18px; border-radius: 4px; margin-bottom: 24px;
+    }
+    .page-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.6rem, 5vw, 4rem);
+      font-weight: 400; line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .page-title em { font-style: italic; color: var(--gold); }
+    .page-subtitle {
+      font-size: 1.05rem; color: var(--text-secondary);
+      max-width: 560px; margin: 0 auto 36px; line-height: 1.75; font-weight: 400;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 15px 34px; background: var(--gold); color: var(--bg-primary);
+      font-family: var(--font-body); font-size: 0.88rem; font-weight: 600;
+      letter-spacing: 0.04em; border: none; border-radius: 5px;
+      cursor: pointer; text-decoration: none; transition: all 0.35s ease;
+      box-shadow: 0 2px 24px rgba(200,160,74,0.2), inset 0 1px 0 rgba(255,255,255,0.12);
+    }
+    .btn-primary:hover {
+      background: var(--gold-light);
+      box-shadow: 0 6px 36px rgba(200,160,74,0.3);
+      transform: translateY(-2px);
+    }
+    .btn-primary svg { width: 16px; height: 16px; }
+
+    /* Divider */
+    .section-divider {
+      width: 100%; height: 1px;
+      background: linear-gradient(to right, transparent, rgba(200,160,74,0.08), transparent);
+    }
+
+    /* Screenshots Section */
+    .screenshots-section {
+      padding: 100px 24px;
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+    .section-label {
+      display: block; text-align: center;
+      font-size: 0.65rem; font-weight: 600;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 18px;
+    }
+    .section-heading {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 400; line-height: 1.12;
+      text-align: center; margin-bottom: 60px;
+    }
+
+    .screenshot-block {
+      margin-bottom: 80px;
+      opacity: 0; transform: translateY(36px);
+      transition: opacity 0.9s var(--ease-out-expo), transform 0.9s var(--ease-out-expo);
+    }
+    .screenshot-block.visible { opacity: 1; transform: translateY(0); }
+
+    .screenshot-block-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    .screenshot-block-grid.reverse { direction: rtl; }
+    .screenshot-block-grid.reverse > * { direction: ltr; }
+
+    .screenshot-image {
+      border-radius: 14px; overflow: hidden;
+      border: 1px solid rgba(200,160,74,0.06);
+      background: var(--bg-surface);
+      transition: border-color 0.35s ease, transform 0.5s var(--ease-out-expo);
+    }
+    .screenshot-image:hover {
+      border-color: rgba(200,160,74,0.15);
+      transform: translateY(-4px);
+    }
+    .screenshot-image img {
+      width: 100%; height: auto; display: block;
+    }
+
+    .screenshot-text h3 {
+      font-family: var(--font-display);
+      font-size: 1.6rem; font-weight: 400; margin-bottom: 16px;
+    }
+    .screenshot-text p {
+      font-size: 0.95rem; color: var(--text-secondary);
+      line-height: 1.75; font-weight: 300; margin-bottom: 12px;
+    }
+    .screenshot-text ul {
+      list-style: none; padding: 0; margin-top: 16px;
+    }
+    .screenshot-text ul li {
+      position: relative; padding-left: 20px;
+      font-size: 0.9rem; color: var(--text-secondary);
+      line-height: 1.8; font-weight: 300;
+    }
+    .screenshot-text ul li::before {
+      content: '';
+      position: absolute; left: 0; top: 10px;
+      width: 6px; height: 6px;
+      background: var(--gold); border-radius: 50%;
+    }
+
+    /* CTA */
+    .page-cta {
+      padding: 120px 24px;
+      text-align: center;
+      position: relative;
+    }
+    .page-cta::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 65% 45% at 50% 50%, rgba(200,160,74,0.04) 0%, transparent 70%);
+    }
+    .page-cta-inner { position: relative; z-index: 1; max-width: 600px; margin: 0 auto; }
+    .page-cta h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 400; margin-bottom: 16px;
+    }
+    .page-cta p {
+      font-size: 1rem; color: var(--text-secondary);
+      margin-bottom: 36px; line-height: 1.75;
+    }
+    .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 15px 34px; background: transparent; color: var(--text-primary);
+      font-family: var(--font-body); font-size: 0.88rem; font-weight: 400;
+      letter-spacing: 0.04em; border: 1px solid rgba(240,237,232,0.12);
+      border-radius: 5px; cursor: pointer; text-decoration: none; transition: all 0.35s ease;
+    }
+    .btn-secondary:hover {
+      border-color: var(--gold-dim); color: var(--gold-light);
+      background: rgba(200,160,74,0.04);
+    }
+
+    /* Footer */
+    .site-footer {
+      background: rgba(15,15,15,0.92);
+      border-top: 1px solid rgba(200,160,74,0.04);
+      padding: 36px 24px;
+      text-align: center;
+    }
+    .footer-copyright { font-size: 0.8rem; color: var(--text-muted); font-weight: 300; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .site-header { padding: 16px 20px; }
+      .page-hero { padding: 120px 20px 60px; }
+      .screenshots-section { padding: 60px 20px; }
+      .screenshot-block-grid { grid-template-columns: 1fr; gap: 28px; }
+      .screenshot-block-grid.reverse { direction: ltr; }
+      .page-cta { padding: 80px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <a href="index.html" class="header-logo">
+      <img src="https://briarbear.ai/wp-content/uploads/elementor/thumbs/BriarBear-Transparent-ra98r40wv96q6i5lt8x0b2mea40eauiddcsdwnaqxs.png" alt="BriarBear">
+      <span class="header-logo-text">BriarBear</span>
+    </a>
+    <a href="index.html" class="back-link">
+      <svg viewBox="0 0 16 16" fill="none"><path d="M13 8H3M7 4L3 8l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back to Home
+    </a>
+  </header>
+
+  <!-- Hero -->
+  <section class="page-hero">
+    <div class="page-hero-content">
+      <span class="page-tag">Gift Discovery Platform</span>
+      <h1 class="page-title">Gift-Giving, <em>Reimagined.</em></h1>
+      <p class="page-subtitle">Yibby is a smart gift discovery platform that matches emotional intent with curated recommendations. Tell it how you feel, and it finds the perfect gift.</p>
+      <a href="https://yibby.ai" target="_blank" rel="noopener" class="btn-primary">
+        Visit Yibby.ai
+        <svg viewBox="0 0 16 16" fill="none"><path d="M4 12L12 4M12 4H6M12 4v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Screenshots -->
+  <div class="screenshots-section">
+    <span class="section-label">Platform Overview</span>
+    <h2 class="section-heading">Inside Yibby.ai</h2>
+
+    <!-- Homepage -->
+    <div class="screenshot-block" data-reveal>
+      <div class="screenshot-block-grid">
+        <div class="screenshot-image">
+          <img src="./screenshots/yibby-homepage.png" alt="Yibby.ai Homepage" loading="lazy">
+        </div>
+        <div class="screenshot-text">
+          <h3>Emotion-First Discovery</h3>
+          <p>The Yibby homepage introduces a revolutionary approach to gift shopping. Instead of browsing endless product categories, you start with who you're shopping for and how you want them to feel.</p>
+          <ul>
+            <li>Choose between "For Her" and "For Him" pathways</li>
+            <li>Clean, inviting design with immediate call-to-action</li>
+            <li>Smart recommendations powered by human-curated data</li>
+            <li>Connected to trusted merchants like Amazon, Etsy, and TikTok Shop</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gifts for Her -->
+    <div class="screenshot-block" data-reveal>
+      <div class="screenshot-block-grid reverse">
+        <div class="screenshot-image">
+          <img src="./screenshots/yibby-gifts-for-her.png" alt="Yibby Gifts for Her" loading="lazy">
+        </div>
+        <div class="screenshot-text">
+          <h3>Curated Gift Collections</h3>
+          <p>The gift browsing experience is organized by categories that matter - Health & Wellness, Hobbies & Activities, and Home & Kitchen. Each collection is thoughtfully curated based on real gifting data.</p>
+          <ul>
+            <li>Shop by personality, interest, occasion, and price</li>
+            <li>Real customer stories and verified 5-star testimonials</li>
+            <li>Smart filtering to narrow down the perfect gift quickly</li>
+            <li>Price-conscious options including "Under $50" collections</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gifts for Him -->
+    <div class="screenshot-block" data-reveal>
+      <div class="screenshot-block-grid">
+        <div class="screenshot-image">
+          <img src="./screenshots/yibby-gifts-for-him.png" alt="Yibby Gifts for Him" loading="lazy">
+        </div>
+        <div class="screenshot-text">
+          <h3>Personalized Pathways</h3>
+          <p>Whether shopping for him or her, Yibby adapts its recommendations based on the recipient's persona. The platform remembers your preferences and learns from every interaction.</p>
+          <ul>
+            <li>Tailored categories for different recipient types</li>
+            <li>Occasion-based filtering (Birthday, Anniversary, Christmas, Valentine's Day)</li>
+            <li>Cookie-based preference persistence for return visits</li>
+            <li>No account required to start discovering gifts</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search -->
+    <div class="screenshot-block" data-reveal>
+      <div class="screenshot-block-grid reverse">
+        <div class="screenshot-image">
+          <img src="./screenshots/yibby-search.png" alt="Yibby Search Page" loading="lazy">
+        </div>
+        <div class="screenshot-text">
+          <h3>Browse by Feeling</h3>
+          <p>Yibby's search experience goes beyond keywords. Explore trending gift types, browse by emotional categories, and discover gifts that match the feeling you want to express.</p>
+          <ul>
+            <li>Trending searches: Spa gifts, Tech gadgets, Luxury items</li>
+            <li>Gift types: Unique, Classic, Luxury, Practical, Personalized, Experience</li>
+            <li>Full-text search across the entire curated catalog</li>
+            <li>Real-time results with dynamic filtering</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- CTA -->
+  <section class="page-cta">
+    <div class="page-cta-inner">
+      <h2>Start Discovering</h2>
+      <p>Find the perfect gift that says exactly what you mean. Yibby makes gift-giving effortless and meaningful.</p>
+      <div class="cta-buttons">
+        <a href="https://yibby.ai" target="_blank" rel="noopener" class="btn-primary">
+          Visit Yibby.ai
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 12L12 4M12 4H6M12 4v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="index.html" class="btn-secondary">Back to BriarBear</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <span class="footer-copyright">&copy; 2026 BriarBear. All rights reserved.</span>
+  </footer>
+
+  <script>
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+    document.querySelectorAll('.screenshot-block').forEach(el => obs.observe(el));
+  </script>
+</body>
+</html>

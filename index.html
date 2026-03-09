@@ -53,6 +53,7 @@
       width: 100%;
       height: 100%;
       pointer-events: none;
+      opacity: 0.3;
     }
 
     /* All content sits above the smoke */
@@ -691,6 +692,98 @@
       font-weight: 300;
     }
 
+    /* ── Testimonials ── */
+    .testimonials { background: rgba(15, 15, 15, 0.88); }
+    .testimonials .section-label,
+    .testimonials .section-heading { text-align: center; }
+    .testimonials .section-label { display: block; }
+    .testimonials .section-heading { margin-bottom: 8px; }
+    .testimonials-subtitle {
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 1rem;
+      margin-bottom: 48px;
+      font-weight: 400;
+    }
+    .testimonials-badge {
+      display: inline-block;
+      border: 1px solid rgba(200,160,74,0.15);
+      padding: 5px 16px;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+    .testimonials-columns {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      max-height: 740px;
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(to bottom, transparent, black 25%, black 75%, transparent);
+      mask-image: linear-gradient(to bottom, transparent, black 25%, black 75%, transparent);
+    }
+    .testimonial-column {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .testimonial-column-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      animation: scrollUp var(--scroll-duration, 15s) linear infinite;
+    }
+    @keyframes scrollUp {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-50%); }
+    }
+    .testimonial-card {
+      padding: 28px;
+      border-radius: 16px;
+      background: var(--bg-elevated);
+      border: 1px solid rgba(200,160,74,0.04);
+      max-width: 320px;
+      width: 100%;
+      transition: border-color 0.35s ease;
+    }
+    .testimonial-card:hover { border-color: rgba(200,160,74,0.12); }
+    .testimonial-card-text {
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      font-weight: 300;
+      margin-bottom: 20px;
+    }
+    .testimonial-card-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .testimonial-card-author img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .testimonial-card-name {
+      font-weight: 500;
+      font-size: 0.9rem;
+      line-height: 1.3;
+    }
+    .testimonial-card-role {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.3;
+    }
+    .testimonials-col-2 { display: none; }
+    .testimonials-col-3 { display: none; }
+    @media (min-width: 769px) { .testimonials-col-2 { display: flex; } }
+    @media (min-width: 1025px) { .testimonials-col-3 { display: flex; } }
+
     /* ── CTA Section ── */
     .cta-section {
       padding: 160px 24px;
@@ -826,9 +919,7 @@
   <div class="mobile-overlay" id="mobile-nav">
     <a href="#projects" onclick="closeMobileNav()">Projects</a>
     <a href="#about" onclick="closeMobileNav()">About</a>
-    <a href="https://arca.ph" target="_blank" rel="noopener" onclick="closeMobileNav()">Arca.ph</a>
-    <a href="https://yibby.ai" target="_blank" rel="noopener" onclick="closeMobileNav()">Yibby.ai</a>
-    <a href="#contact" onclick="closeMobileNav()">Contact</a>
+    <a href="contact.html" onclick="closeMobileNav()">Contact</a>
   </div>
 
   <!-- Header -->
@@ -841,9 +932,7 @@
       <ul class="nav-links">
         <li><a href="#projects">Projects</a></li>
         <li><a href="#about">About</a></li>
-        <li><a href="https://arca.ph" target="_blank" rel="noopener">Arca.ph</a></li>
-        <li><a href="https://yibby.ai" target="_blank" rel="noopener">Yibby.ai</a></li>
-        <li><a href="#contact" class="nav-cta">Get in Touch</a></li>
+        <li><a href="contact.html" class="nav-cta">Get in Touch</a></li>
       </ul>
     </nav>
     <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" onclick="toggleMobileNav()">
@@ -886,7 +975,7 @@
       <h2 class="section-heading reveal reveal-d1">What We're Building</h2>
       <div class="projects-grid">
 
-        <a href="https://yibby.ai" target="_blank" rel="noopener" class="project-card reveal reveal-d2">
+        <a href="yibby.html" class="project-card reveal reveal-d2">
           <div class="project-card-image">
             <img src="./screenshots/Yibby.png" alt="Yibby.ai platform" loading="lazy">
           </div>
@@ -895,13 +984,13 @@
             <h3 class="project-card-title">Yibby.ai</h3>
             <p class="project-card-desc">A smart gift discovery platform that matches emotional intent with curated recommendations. Find meaningful presents organized by relationships, occasions, and the feelings you want to express.</p>
             <span class="project-card-link">
-              Visit Yibby.ai
+              Learn More
               <svg viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </span>
           </div>
         </a>
 
-        <a href="https://arca.ph" target="_blank" rel="noopener" class="project-card reveal reveal-d3">
+        <a href="arca.html" class="project-card reveal reveal-d3">
           <div class="project-card-image">
             <img src="./screenshots/Arca.png" alt="Arca.ph platform" loading="lazy">
           </div>
@@ -910,7 +999,7 @@
             <h3 class="project-card-title">Arca.ph</h3>
             <p class="project-card-desc">An AI upskilling community for Filipino professionals, offering hands-on training in AI tools and pathways to freelance work. Learn product management, design, research, and automation.</p>
             <span class="project-card-link">
-              Visit Arca.ph
+              Learn More
               <svg viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </span>
           </div>
@@ -991,6 +1080,223 @@
 
   <div class="section-divider"></div>
 
+  <!-- Testimonials -->
+  <section class="section testimonials" id="testimonials">
+    <div class="section-inner">
+      <div class="reveal">
+        <div style="text-align:center"><span class="testimonials-badge">Testimonials</span></div>
+        <h2 class="section-heading">What Our Users Say</h2>
+        <p class="testimonials-subtitle">See what our community and partners have to say about working with BriarBear.</p>
+      </div>
+      <div class="testimonials-columns reveal reveal-d2">
+
+        <!-- Column 1 -->
+        <div class="testimonial-column">
+          <div class="testimonial-column-inner" style="--scroll-duration:15s">
+            <div class="testimonial-card">
+              <p class="testimonial-card-text">"Yibby completely changed how I shop for gifts. Instead of guessing, I just tell it how I feel and it finds the perfect match. My wife was genuinely surprised on her birthday."</p>
+              <div class="testimonial-card-author">
+                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Marcus Chen">
+                <div>
+                  <div class="testimonial-card-name">Marcus Chen</div>
+                  <div class="testimonial-card-role">Yibby User</div>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <p class="testimonial-card-text">"Arca helped me transition from a traditional VA role to AI-powered product management. The hands-on training with real tools gave me confidence to land better clients."</p>
+              <div class="testimonial-card-author">
+                <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Maria Santos">
+                <div>
+                  <div class="testimonial-card-name">Maria Santos</div>
+                  <div class="testimonial-card-role">Arca Community Member</div>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <p class="testimonial-card-text">"BriarBear's approach to human-curated data sets their products apart. Every recommendation from Yibby feels thoughtful, not algorithmically random."</p>
+              <div class="testimonial-card-author">
+                <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Sarah Mitchell">
+                <div>
+                  <div class="testimonial-card-name">Sarah Mitchell</div>
+                  <div class="testimonial-card-role">Product Reviewer</div>
+                </div>
+              </div>
+            </div>
+            <!-- Duplicate for infinite scroll -->
+            <div class="testimonial-card">
+              <p class="testimonial-card-text">"Yibby completely changed how I shop for gifts. Instead of guessing, I just tell it how I feel and it finds the perfect match. My wife was genuinely surprised on her birthday."</p>
+              <div class="testimonial-card-author">
+                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Marcus Chen">
+                <div>
+                  <div class="testimonial-card-name">Marcus Chen</div>
+                  <div class="testimonial-card-role">Yibby User</div>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <p class="testimonial-card-text">"Arca helped me transition from a traditional VA role to AI-powered product management. The hands-on training with real tools gave me confidence to land better clients."</p>
+              <div class="testimonial-card-author">
+                <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Maria Santos">
+                <div>
+                  <div class="testimonial-card-name">Maria Santos</div>
+                  <div class="testimonial-card-role">Arca Community Member</div>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <p class="testimonial-card-text">"BriarBear's approach to human-curated data sets their products apart. Every recommendation from Yibby feels thoughtful, not algorithmically random."</p>
+              <div class="testimonial-card-author">
+                <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Sarah Mitchell">
+                <div>
+                  <div class="testimonial-card-name">Sarah Mitchell</div>
+                  <div class="testimonial-card-role">Product Reviewer</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 2 -->
+        <div class="testimonial-column testimonials-col-2">
+          <div class="testimonial-column-inner" style="--scroll-duration:19s">
+            <div class="testimonial-card">
+              <p class="testimonial-card-text">"As an employer, Arca's vetting process saved us weeks of interviewing. The Filipino talent we hired through the platform was AI-ready from day one."</p>
+              <div class="testimonial-card-author">
+                <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="David Park">
+                <div>
+                  <div class="testimonial-card-name">David Park</div>
+                  <div class="testimonial-card-role">Startup Founder</div>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <p class="testimonial-card-text">"I used Yibby for holiday shopping and it was a game changer. Bought gifts for 12 people in under an hour. Every single one was a hit."</p>
+              <div class="testimonial-card-author">
+                <img src="https://randomuser.me/api/portraits/women/22.jpg" alt="Jessica Torres">
+                <div>
+                  <div class="testimonial-card-name">Jessica Torres</div>
+                  <div class="testimonial-card-role">Yibby User</div>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <p class="testimonial-card-text">"The AI skills training at Arca is practical, not theoretical. I learned Claude, automation tools, and landed a remote product role within 3 months."</p>
+              <div class="testimonial-card-author">
+                <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Rafael Gomez">
+                <div>
+                  <div class="testimonial-card-name">Rafael Gomez</div>
+                  <div class="testimonial-card-role">Arca Graduate</div>
+                </div>
+              </div>
+            </div>
+            <!-- Duplicate for infinite scroll -->
+            <div class="testimonial-card">
+              <p class="testimonial-card-text">"As an employer, Arca's vetting process saved us weeks of interviewing. The Filipino talent we hired through the platform was AI-ready from day one."</p>
+              <div class="testimonial-card-author">
+                <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="David Park">
+                <div>
+                  <div class="testimonial-card-name">David Park</div>
+                  <div class="testimonial-card-role">Startup Founder</div>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <p class="testimonial-card-text">"I used Yibby for holiday shopping and it was a game changer. Bought gifts for 12 people in under an hour. Every single one was a hit."</p>
+              <div class="testimonial-card-author">
+                <img src="https://randomuser.me/api/portraits/women/22.jpg" alt="Jessica Torres">
+                <div>
+                  <div class="testimonial-card-name">Jessica Torres</div>
+                  <div class="testimonial-card-role">Yibby User</div>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <p class="testimonial-card-text">"The AI skills training at Arca is practical, not theoretical. I learned Claude, automation tools, and landed a remote product role within 3 months."</p>
+              <div class="testimonial-card-author">
+                <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Rafael Gomez">
+                <div>
+                  <div class="testimonial-card-name">Rafael Gomez</div>
+                  <div class="testimonial-card-role">Arca Graduate</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 3 -->
+        <div class="testimonial-column testimonials-col-3">
+          <div class="testimonial-column-inner" style="--scroll-duration:17s">
+            <div class="testimonial-card">
+              <p class="testimonial-card-text">"BriarBear doesn't just build AI tools, they build AI that actually understands context. Their products feel human in the best possible way."</p>
+              <div class="testimonial-card-author">
+                <img src="https://randomuser.me/api/portraits/men/12.jpg" alt="James Wright">
+                <div>
+                  <div class="testimonial-card-name">James Wright</div>
+                  <div class="testimonial-card-role">Tech Blogger</div>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <p class="testimonial-card-text">"Through Arca, I connected with a US-based company and now manage their AI automation workflow. The platform opened doors I didn't know existed."</p>
+              <div class="testimonial-card-author">
+                <img src="https://randomuser.me/api/portraits/women/56.jpg" alt="Ana Reyes">
+                <div>
+                  <div class="testimonial-card-name">Ana Reyes</div>
+                  <div class="testimonial-card-role">Arca Talent</div>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <p class="testimonial-card-text">"Yibby's emotion-first approach is brilliant. I described wanting something that says 'I appreciate you' and it found a gift I never would have thought of."</p>
+              <div class="testimonial-card-author">
+                <img src="https://randomuser.me/api/portraits/men/28.jpg" alt="Kevin Liu">
+                <div>
+                  <div class="testimonial-card-name">Kevin Liu</div>
+                  <div class="testimonial-card-role">Yibby User</div>
+                </div>
+              </div>
+            </div>
+            <!-- Duplicate for infinite scroll -->
+            <div class="testimonial-card">
+              <p class="testimonial-card-text">"BriarBear doesn't just build AI tools, they build AI that actually understands context. Their products feel human in the best possible way."</p>
+              <div class="testimonial-card-author">
+                <img src="https://randomuser.me/api/portraits/men/12.jpg" alt="James Wright">
+                <div>
+                  <div class="testimonial-card-name">James Wright</div>
+                  <div class="testimonial-card-role">Tech Blogger</div>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <p class="testimonial-card-text">"Through Arca, I connected with a US-based company and now manage their AI automation workflow. The platform opened doors I didn't know existed."</p>
+              <div class="testimonial-card-author">
+                <img src="https://randomuser.me/api/portraits/women/56.jpg" alt="Ana Reyes">
+                <div>
+                  <div class="testimonial-card-name">Ana Reyes</div>
+                  <div class="testimonial-card-role">Arca Talent</div>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <p class="testimonial-card-text">"Yibby's emotion-first approach is brilliant. I described wanting something that says 'I appreciate you' and it found a gift I never would have thought of."</p>
+              <div class="testimonial-card-author">
+                <img src="https://randomuser.me/api/portraits/men/28.jpg" alt="Kevin Liu">
+                <div>
+                  <div class="testimonial-card-name">Kevin Liu</div>
+                  <div class="testimonial-card-role">Yibby User</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
   <!-- CTA -->
   <section class="section cta-section" id="contact">
     <div class="section-inner">
@@ -998,8 +1304,8 @@
       <h2 class="section-heading reveal reveal-d1">Ready to Build<br>Something Real?</h2>
       <p class="section-body reveal reveal-d2">Whether you need a custom AI product or an intelligent system built on quality data, we'd love to hear from you.</p>
       <div class="cta-buttons reveal reveal-d3">
-        <a href="mailto:hello@briarbear.ai" class="btn-primary">
-          Contact Us
+        <a href="contact.html" class="btn-primary">
+          Get in Touch
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
         <a href="#projects" class="btn-secondary">View Projects</a>
@@ -1021,8 +1327,8 @@
         <div class="footer-col">
           <h4>Products</h4>
           <ul>
-            <li><a href="https://yibby.ai" target="_blank" rel="noopener">Yibby.ai</a></li>
-            <li><a href="https://arca.ph" target="_blank" rel="noopener">Arca.ph</a></li>
+            <li><a href="yibby.html">Yibby.ai</a></li>
+            <li><a href="arca.html">Arca.ph</a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -1037,7 +1343,7 @@
           <ul>
             <li><a href="#about">About</a></li>
             <li><a href="#values">Our Approach</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="contact.html">Contact</a></li>
           </ul>
         </div>
         <div class="footer-col">
