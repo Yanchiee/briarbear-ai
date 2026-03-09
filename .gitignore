@@ -1,0 +1,4 @@
+.vercel
+node_modules/
+temporary screenshots/
+package-lock.json
