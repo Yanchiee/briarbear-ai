@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Console — BriarBear</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/png" href="https://briarbear.ai/wp-content/uploads/elementor/thumbs/BriarBear-Transparent-ra98r40wv96q6i5lt8x0b2mea40eauiddcsdwnaqxs.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #080808;
+      --bg-elevated: #0f0f0f;
+      --bg-surface: #171717;
+      --bg-surface-hover: #1e1e1e;
+      --gold: #c8a04a;
+      --gold-light: #e2c36a;
+      --gold-dim: #8a6d2b;
+      --gold-muted: #a68b3c;
+      --gold-glow: rgba(200, 160, 74, 0.12);
+      --gold-glow-strong: rgba(200, 160, 74, 0.25);
+      --text-primary: #f0ede8;
+      --text-secondary: #a8a299;
+      --text-muted: #605c54;
+      --border-subtle: rgba(255,255,255,0.06);
+      --border-card: rgba(200,160,74,0.04);
+      --shadow-card: rgba(0,0,0,0.35);
+      --font-display: 'DM Serif Display', Georgia, serif;
+      --font-body: 'Inter', system-ui, sans-serif;
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+      --status-new: #c8a04a;
+      --status-read: #5a9e6f;
+      --status-archived: #605c54;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* ── Login Gate ── */
+    .login-gate {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .login-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-card);
+      border-radius: 16px;
+      padding: 48px 40px;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+    .login-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+    .login-logo img { height: 34px; width: auto; }
+    .login-logo span {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 400;
+    }
+    .login-title {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      margin-bottom: 8px;
+    }
+    .login-subtitle {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+    }
+    .login-input {
+      width: 100%;
+      padding: 14px 18px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.3s ease;
+      margin-bottom: 16px;
+      -webkit-appearance: none;
+    }
+    .login-input:focus {
+      border-color: var(--gold);
+    }
+    .login-input::placeholder { color: var(--text-muted); }
+    .login-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--gold);
+      color: var(--bg-primary);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+    .login-btn:hover { background: var(--gold-light); }
+    .login-btn:active { transform: scale(0.98); }
+    .login-error {
+      color: #d4634a;
+      font-size: 0.82rem;
+      margin-top: 12px;
+      display: none;
+    }
+
+    /* ── Admin Layout ── */
+    .admin-layout {
+      display: none;
+      min-height: 100vh;
+    }
+    .admin-layout.active { display: flex; flex-direction: column; }
+
+    /* ── Top Bar ── */
+    .admin-topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 32px;
+      background: rgba(8,8,8,0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .topbar-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+    .topbar-logo img { height: 28px; width: auto; }
+    .topbar-logo span {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+    }
+    .topbar-divider {
+      width: 1px;
+      height: 20px;
+      background: var(--border-subtle);
+    }
+    .topbar-title {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .topbar-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .topbar-back:hover { color: var(--gold); }
+    .topbar-back svg { width: 14px; height: 14px; }
+    .logout-btn {
+      padding: 8px 16px;
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      color: var(--text-secondary);
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .logout-btn:hover {
+      border-color: #d4634a;
+      color: #d4634a;
+    }
+
+    /* ── Stats Row ── */
+    .admin-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      padding: 24px 32px;
+    }
+    .admin-stat {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-card);
+      border-radius: 12px;
+      padding: 20px 22px;
+      transition: border-color 0.3s ease;
+    }
+    .admin-stat:hover { border-color: var(--border-subtle); }
+    .admin-stat-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .admin-stat-value {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      color: var(--text-primary);
+      line-height: 1;
+    }
+    .admin-stat-value.gold { color: var(--gold); }
+
+    /* ── Controls ── */
+    .admin-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px 16px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .controls-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .filter-btn {
+      padding: 8px 16px;
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      color: var(--text-secondary);
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+    .filter-btn:hover {
+      border-color: var(--text-muted);
+      color: var(--text-primary);
+    }
+    .filter-btn.active {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--bg-primary);
+    }
+    .filter-count {
+      font-size: 0.65rem;
+      font-weight: 700;
+      margin-left: 4px;
+      opacity: 0.7;
+    }
+
+    .search-wrap {
+      position: relative;
+    }
+    .search-input {
+      padding: 8px 16px 8px 36px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      outline: none;
+      width: 260px;
+      transition: border-color 0.3s ease, width 0.3s ease;
+      -webkit-appearance: none;
+    }
+    .search-input:focus {
+      border-color: var(--gold);
+      width: 320px;
+    }
+    .search-input::placeholder { color: var(--text-muted); }
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 14px;
+      height: 14px;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    /* ── Submissions Table ── */
+    .admin-content {
+      flex: 1;
+      padding: 0 32px 32px;
+    }
+    .submissions-table {
+      width: 100%;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-card);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .table-header {
+      display: grid;
+      grid-template-columns: 2fr 2fr 1.5fr 1.2fr 1.2fr 80px;
+      padding: 14px 20px;
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .table-header-cell {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: color 0.2s ease;
+      user-select: none;
+    }
+    .table-header-cell:hover { color: var(--text-secondary); }
+    .table-header-cell.sorted { color: var(--gold); }
+    .sort-arrow { font-size: 0.55rem; }
+
+    .table-body { max-height: 600px; overflow-y: auto; }
+    .table-body::-webkit-scrollbar { width: 6px; }
+    .table-body::-webkit-scrollbar-track { background: transparent; }
+    .table-body::-webkit-scrollbar-thumb { background: var(--text-muted); border-radius: 3px; }
+
+    .table-row {
+      display: grid;
+      grid-template-columns: 2fr 2fr 1.5fr 1.2fr 1.2fr 80px;
+      padding: 14px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.02);
+      cursor: pointer;
+      transition: background 0.2s ease;
+      align-items: center;
+    }
+    .table-row:hover { background: var(--bg-surface-hover); }
+    .table-row:last-child { border-bottom: none; }
+
+    .table-cell {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding-right: 12px;
+    }
+    .table-cell.name {
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+    .table-cell.subject {
+      color: var(--text-primary);
+      font-weight: 400;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+    .status-badge.new {
+      color: var(--status-new);
+      background: rgba(200, 160, 74, 0.1);
+    }
+    .status-badge.read {
+      color: var(--status-read);
+      background: rgba(90, 158, 111, 0.1);
+    }
+    .status-badge.archived {
+      color: var(--status-archived);
+      background: rgba(96, 92, 84, 0.1);
+    }
+    .status-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .delete-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .delete-btn:hover {
+      color: #d4634a;
+      background: rgba(212, 99, 74, 0.1);
+    }
+    .delete-btn svg { width: 15px; height: 15px; }
+
+    /* ── Empty State ── */
+    .empty-state {
+      padding: 80px 20px;
+      text-align: center;
+    }
+    .empty-icon {
+      width: 48px;
+      height: 48px;
+      color: var(--text-muted);
+      margin: 0 auto 16px;
+      opacity: 0.4;
+    }
+    .empty-title {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      margin-bottom: 6px;
+    }
+    .empty-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Detail Modal ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(6px);
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-card);
+      border-radius: 16px;
+      max-width: 600px;
+      width: 100%;
+      max-height: 80vh;
+      overflow-y: auto;
+      animation: modalIn 0.3s var(--ease-out-expo);
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(0.95) translateY(10px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 28px 0;
+    }
+    .modal-close {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 6px;
+      transition: color 0.2s ease;
+    }
+    .modal-close:hover { color: var(--text-primary); }
+    .modal-close svg { width: 18px; height: 18px; }
+    .modal-body { padding: 20px 28px 28px; }
+    .modal-field {
+      margin-bottom: 20px;
+    }
+    .modal-field-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .modal-field-value {
+      font-size: 0.92rem;
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    .modal-field-value.message {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 16px;
+      white-space: pre-wrap;
+      font-size: 0.88rem;
+    }
+    .modal-actions {
+      display: flex;
+      gap: 8px;
+      padding: 0 28px 24px;
+    }
+    .modal-action-btn {
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: 1px solid var(--border-subtle);
+      background: transparent;
+      color: var(--text-secondary);
+    }
+    .modal-action-btn:hover {
+      border-color: var(--text-muted);
+      color: var(--text-primary);
+    }
+    .modal-action-btn.primary {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--bg-primary);
+    }
+    .modal-action-btn.primary:hover { background: var(--gold-light); }
+    .modal-action-btn.danger {
+      border-color: transparent;
+    }
+    .modal-action-btn.danger:hover {
+      border-color: #d4634a;
+      color: #d4634a;
+    }
+
+    /* ── Loading Spinner ── */
+    .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 20px;
+    }
+    .spinner {
+      width: 32px;
+      height: 32px;
+      border: 3px solid var(--border-subtle);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ── Refresh animation ── */
+    .refresh-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 6px;
+      transition: color 0.2s ease;
+      display: flex;
+      align-items: center;
+    }
+    .refresh-btn:hover { color: var(--gold); }
+    .refresh-btn svg { width: 16px; height: 16px; }
+    .refresh-btn.spinning svg { animation: spin 0.7s linear infinite; }
+
+    /* ── Responsive ── */
+    @media (max-width: 960px) {
+      .admin-stats { grid-template-columns: repeat(2, 1fr); }
+      .table-header, .table-row {
+        grid-template-columns: 2fr 2fr 1.5fr 1.2fr;
+      }
+      .table-header-cell:nth-child(5),
+      .table-header-cell:nth-child(6),
+      .table-cell:nth-child(5),
+      .table-cell:nth-child(6) { display: none; }
+    }
+    @media (max-width: 768px) {
+      .admin-topbar { padding: 14px 20px; }
+      .admin-stats { padding: 20px; gap: 12px; }
+      .admin-controls { padding: 0 20px 12px; }
+      .admin-content { padding: 0 20px 20px; }
+      .search-input { width: 180px; }
+      .search-input:focus { width: 220px; }
+      .table-header, .table-row {
+        grid-template-columns: 1.5fr 2fr 1fr;
+      }
+      .table-header-cell:nth-child(3),
+      .table-cell:nth-child(3) { display: none; }
+      .table-header-cell:nth-child(4) { display: none; }
+      .table-cell:nth-child(4) { display: none; }
+      .topbar-divider { display: none; }
+      .topbar-title { display: none; }
+      .controls-left { flex-wrap: wrap; }
+    }
+    @media (max-width: 480px) {
+      .admin-stats { grid-template-columns: 1fr 1fr; gap: 10px; padding: 16px; }
+      .admin-stat { padding: 16px; }
+      .admin-stat-value { font-size: 1.4rem; }
+      .admin-topbar { padding: 12px 16px; }
+      .admin-controls { padding: 0 16px 12px; flex-direction: column; align-items: stretch; }
+      .controls-left { overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; }
+      .search-wrap { width: 100%; }
+      .search-input, .search-input:focus { width: 100%; }
+      .admin-content { padding: 0 16px 16px; }
+      .table-header, .table-row { padding: 12px 14px; grid-template-columns: 1fr 1fr; }
+      .table-header-cell:nth-child(n+3), .table-cell:nth-child(n+3) { display: none; }
+      .modal-card { border-radius: 12px; }
+      .modal-header { padding: 20px 20px 0; }
+      .modal-body { padding: 16px 20px 20px; }
+      .modal-actions { padding: 0 20px 20px; flex-wrap: wrap; }
+      .filter-btn { padding: 6px 12px; font-size: 0.72rem; white-space: nowrap; }
+      .login-card { padding: 36px 28px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Login Gate -->
+  <div class="login-gate" id="login-gate">
+    <div class="login-card">
+      <div class="login-logo">
+        <img src="https://briarbear.ai/wp-content/uploads/elementor/thumbs/BriarBear-Transparent-ra98r40wv96q6i5lt8x0b2mea40eauiddcsdwnaqxs.png" alt="BriarBear">
+        <span>BriarBear</span>
+      </div>
+      <h1 class="login-title">Admin Console</h1>
+      <p class="login-subtitle">Enter your admin password to continue</p>
+      <input type="password" class="login-input" id="login-password" placeholder="Password" autocomplete="off">
+      <button class="login-btn" id="login-btn">Sign In</button>
+      <p class="login-error" id="login-error">Incorrect password. Try again.</p>
+    </div>
+  </div>
+
+  <!-- Admin Layout -->
+  <div class="admin-layout" id="admin-layout">
+    <!-- Top Bar -->
+    <header class="admin-topbar">
+      <div class="topbar-left">
+        <a href="index.html" class="topbar-logo">
+          <img src="https://briarbear.ai/wp-content/uploads/elementor/thumbs/BriarBear-Transparent-ra98r40wv96q6i5lt8x0b2mea40eauiddcsdwnaqxs.png" alt="BriarBear">
+          <span>BriarBear</span>
+        </a>
+        <div class="topbar-divider"></div>
+        <span class="topbar-title">Admin Console</span>
+      </div>
+      <div class="topbar-right">
+        <button class="refresh-btn" id="refresh-btn" title="Refresh data">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+        </button>
+        <a href="index.html" class="topbar-back">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          Back to Site
+        </a>
+        <button class="logout-btn" id="logout-btn">Sign Out</button>
+      </div>
+    </header>
+
+    <!-- Stats Row -->
+    <div class="admin-stats" id="admin-stats">
+      <div class="admin-stat">
+        <div class="admin-stat-label">Total Submissions</div>
+        <div class="admin-stat-value gold" id="stat-total">—</div>
+      </div>
+      <div class="admin-stat">
+        <div class="admin-stat-label">New</div>
+        <div class="admin-stat-value" id="stat-new">—</div>
+      </div>
+      <div class="admin-stat">
+        <div class="admin-stat-label">Read</div>
+        <div class="admin-stat-value" id="stat-read">—</div>
+      </div>
+      <div class="admin-stat">
+        <div class="admin-stat-label">This Month</div>
+        <div class="admin-stat-value" id="stat-month">—</div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="admin-controls">
+      <div class="controls-left">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="new">New</button>
+        <button class="filter-btn" data-filter="read">Read</button>
+        <button class="filter-btn" data-filter="archived">Archived</button>
+      </div>
+      <div class="search-wrap">
+        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" class="search-input" id="search-input" placeholder="Search by name, email, subject...">
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="admin-content">
+      <div class="submissions-table" id="submissions-table">
+        <div class="table-header">
+          <div class="table-header-cell sorted" data-sort="name">Name <span class="sort-arrow">▲</span></div>
+          <div class="table-header-cell" data-sort="email">Email</div>
+          <div class="table-header-cell" data-sort="subject">Subject</div>
+          <div class="table-header-cell" data-sort="project">Project</div>
+          <div class="table-header-cell" data-sort="submitted_at">Date <span class="sort-arrow"></span></div>
+          <div class="table-header-cell">Actions</div>
+        </div>
+        <div class="table-body" id="table-body">
+          <div class="loading" id="table-loading">
+            <div class="spinner"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Detail Modal -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-card" id="modal-card">
+      <div class="modal-header">
+        <span id="modal-status"></span>
+        <button class="modal-close" id="modal-close">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-field">
+          <div class="modal-field-label">Name</div>
+          <div class="modal-field-value" id="modal-name"></div>
+        </div>
+        <div class="modal-field">
+          <div class="modal-field-label">Email</div>
+          <div class="modal-field-value" id="modal-email"></div>
+        </div>
+        <div class="modal-field">
+          <div class="modal-field-label">Subject</div>
+          <div class="modal-field-value" id="modal-subject"></div>
+        </div>
+        <div class="modal-field">
+          <div class="modal-field-label">Project Type</div>
+          <div class="modal-field-value" id="modal-project"></div>
+        </div>
+        <div class="modal-field">
+          <div class="modal-field-label">Submitted</div>
+          <div class="modal-field-value" id="modal-date"></div>
+        </div>
+        <div class="modal-field">
+          <div class="modal-field-label">Message</div>
+          <div class="modal-field-value message" id="modal-message"></div>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="modal-action-btn primary" id="modal-mark-read">Mark as Read</button>
+        <button class="modal-action-btn" id="modal-archive">Archive</button>
+        <button class="modal-action-btn danger" id="modal-delete">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ── Configuration ──
+    const SUPABASE_URL = 'https://fdhynvbgpbfmpjfvcbec.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZkaHludmJncGJmbXBqZnZjYmVjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwNTk4MjcsImV4cCI6MjA4ODYzNTgyN30.cNjvdJeXoQNFLzIr-UN-AxvPllmOOqEGnazOK7XAUF8';
+    const ADMIN_PASSWORD_HASH = '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'; // sha256 of "password"
+
+    let submissions = [];
+    let currentFilter = 'all';
+    let currentSort = { key: 'submitted_at', dir: 'desc' };
+    let searchQuery = '';
+    let activeSubmission = null;
+
+    // ── Utility: SHA-256 hash ──
+    async function sha256(str) {
+      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    // ── Auth ──
+    const loginGate = document.getElementById('login-gate');
+    const adminLayout = document.getElementById('admin-layout');
+    const loginBtn = document.getElementById('login-btn');
+    const loginPassword = document.getElementById('login-password');
+    const loginError = document.getElementById('login-error');
+    const logoutBtn = document.getElementById('logout-btn');
+
+    function checkAuth() {
+      const token = sessionStorage.getItem('bb-admin-auth');
+      if (token === 'authenticated') {
+        loginGate.style.display = 'none';
+        adminLayout.classList.add('active');
+        fetchSubmissions();
+      }
+    }
+
+    loginBtn.addEventListener('click', handleLogin);
+    loginPassword.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') handleLogin();
+    });
+
+    async function handleLogin() {
+      const pwd = loginPassword.value;
+      if (!pwd) return;
+      const hash = await sha256(pwd);
+      if (hash === ADMIN_PASSWORD_HASH) {
+        sessionStorage.setItem('bb-admin-auth', 'authenticated');
+        loginGate.style.display = 'none';
+        adminLayout.classList.add('active');
+        loginError.style.display = 'none';
+        fetchSubmissions();
+      } else {
+        loginError.style.display = 'block';
+        loginPassword.value = '';
+        loginPassword.focus();
+      }
+    }
+
+    logoutBtn.addEventListener('click', function() {
+      sessionStorage.removeItem('bb-admin-auth');
+      location.reload();
+    });
+
+    // ── Fetch Data ──
+    async function fetchSubmissions() {
+      const tableBody = document.getElementById('table-body');
+      tableBody.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+
+      try {
+        const res = await fetch(SUPABASE_URL + '/rest/v1/Form_Submissions?select=*&order=submitted_at.desc', {
+          headers: {
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
+          }
+        });
+        if (!res.ok) throw new Error('Failed to fetch');
+        const data = await res.json();
+        submissions = data.map(function(s) {
+          if (!s.status) s.status = 'new';
+          return s;
+        });
+
+        // Sync local status overrides
+        const statusMap = JSON.parse(localStorage.getItem('bb-admin-status') || '{}');
+        submissions.forEach(function(s) {
+          if (statusMap[s.id]) s.status = statusMap[s.id];
+        });
+
+        updateStats();
+        renderTable();
+      } catch (err) {
+        tableBody.innerHTML = '<div class="empty-state"><svg class="empty-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><div class="empty-title">Failed to load</div><div class="empty-desc">Could not connect to Supabase. Check your configuration.</div></div>';
+      }
+    }
+
+    // ── Stats ──
+    function updateStats() {
+      document.getElementById('stat-total').textContent = submissions.length;
+      document.getElementById('stat-new').textContent = submissions.filter(function(s) { return s.status === 'new'; }).length;
+      document.getElementById('stat-read').textContent = submissions.filter(function(s) { return s.status === 'read'; }).length;
+
+      var now = new Date();
+      var monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+      document.getElementById('stat-month').textContent = submissions.filter(function(s) {
+        return new Date(s.submitted_at) >= monthStart;
+      }).length;
+    }
+
+    // ── Render Table ──
+    function renderTable() {
+      var filtered = submissions.filter(function(s) {
+        if (currentFilter !== 'all' && s.status !== currentFilter) return false;
+        if (searchQuery) {
+          var q = searchQuery.toLowerCase();
+          return (s.name || '').toLowerCase().includes(q) ||
+                 (s.email || '').toLowerCase().includes(q) ||
+                 (s.subject || '').toLowerCase().includes(q) ||
+                 (s.project || '').toLowerCase().includes(q);
+        }
+        return true;
+      });
+
+      // Sort
+      filtered.sort(function(a, b) {
+        var aVal = a[currentSort.key] || '';
+        var bVal = b[currentSort.key] || '';
+        if (currentSort.key === 'submitted_at') {
+          aVal = new Date(aVal).getTime();
+          bVal = new Date(bVal).getTime();
+        } else {
+          aVal = aVal.toString().toLowerCase();
+          bVal = bVal.toString().toLowerCase();
+        }
+        if (aVal < bVal) return currentSort.dir === 'asc' ? -1 : 1;
+        if (aVal > bVal) return currentSort.dir === 'asc' ? 1 : -1;
+        return 0;
+      });
+
+      var tableBody = document.getElementById('table-body');
+
+      if (filtered.length === 0) {
+        tableBody.innerHTML = '<div class="empty-state"><svg class="empty-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><div class="empty-title">No submissions found</div><div class="empty-desc">' + (searchQuery ? 'Try a different search term.' : 'Submissions will appear here when users fill out the contact form.') + '</div></div>';
+        return;
+      }
+
+      var html = '';
+      filtered.forEach(function(s) {
+        var date = new Date(s.submitted_at);
+        var dateStr = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        html += '<div class="table-row" data-id="' + s.id + '">' +
+          '<div class="table-cell name">' + escapeHtml(s.name || '—') + '</div>' +
+          '<div class="table-cell">' + escapeHtml(s.email || '—') + '</div>' +
+          '<div class="table-cell subject">' + escapeHtml(s.subject || '—') + '</div>' +
+          '<div class="table-cell">' + escapeHtml(s.project || '—') + '</div>' +
+          '<div class="table-cell">' + dateStr + '</div>' +
+          '<div class="table-cell"><button class="delete-btn" data-id="' + s.id + '" title="Delete"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button></div>' +
+          '</div>';
+      });
+      tableBody.innerHTML = html;
+
+      // Row click -> open modal
+      tableBody.querySelectorAll('.table-row').forEach(function(row) {
+        row.addEventListener('click', function(e) {
+          if (e.target.closest('.delete-btn')) return;
+          var id = parseInt(row.dataset.id);
+          openModal(id);
+        });
+      });
+
+      // Delete buttons
+      tableBody.querySelectorAll('.delete-btn').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          var id = parseInt(btn.dataset.id);
+          if (confirm('Delete this submission permanently?')) {
+            deleteSubmission(id);
+          }
+        });
+      });
+    }
+
+    function escapeHtml(str) {
+      var div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    // ── Modal ──
+    var modalOverlay = document.getElementById('modal-overlay');
+
+    function openModal(id) {
+      var s = submissions.find(function(sub) { return sub.id === id; });
+      if (!s) return;
+      activeSubmission = s;
+
+      document.getElementById('modal-status').innerHTML = '<span class="status-badge ' + s.status + '"><span class="status-dot"></span>' + s.status + '</span>';
+      document.getElementById('modal-name').textContent = s.name || '—';
+      document.getElementById('modal-email').textContent = s.email || '—';
+      document.getElementById('modal-subject').textContent = s.subject || '—';
+      document.getElementById('modal-project').textContent = s.project || '—';
+      document.getElementById('modal-message').textContent = s.message || '—';
+
+      var date = new Date(s.submitted_at);
+      document.getElementById('modal-date').textContent = date.toLocaleString('en-US', {
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+        hour: 'numeric', minute: '2-digit'
+      });
+
+      // Update button text based on status
+      var markBtn = document.getElementById('modal-mark-read');
+      var archiveBtn = document.getElementById('modal-archive');
+      if (s.status === 'new') {
+        markBtn.textContent = 'Mark as Read';
+        markBtn.style.display = '';
+        archiveBtn.textContent = 'Archive';
+      } else if (s.status === 'read') {
+        markBtn.textContent = 'Mark as New';
+        markBtn.style.display = '';
+        archiveBtn.textContent = 'Archive';
+      } else {
+        markBtn.textContent = 'Mark as Read';
+        markBtn.style.display = '';
+        archiveBtn.textContent = 'Unarchive';
+      }
+
+      modalOverlay.classList.add('active');
+    }
+
+    document.getElementById('modal-close').addEventListener('click', function() {
+      modalOverlay.classList.remove('active');
+      activeSubmission = null;
+    });
+    modalOverlay.addEventListener('click', function(e) {
+      if (e.target === modalOverlay) {
+        modalOverlay.classList.remove('active');
+        activeSubmission = null;
+      }
+    });
+
+    document.getElementById('modal-mark-read').addEventListener('click', function() {
+      if (!activeSubmission) return;
+      if (activeSubmission.status === 'new') {
+        setStatus(activeSubmission.id, 'read');
+      } else {
+        setStatus(activeSubmission.id, 'new');
+      }
+      modalOverlay.classList.remove('active');
+    });
+
+    document.getElementById('modal-archive').addEventListener('click', function() {
+      if (!activeSubmission) return;
+      if (activeSubmission.status === 'archived') {
+        setStatus(activeSubmission.id, 'read');
+      } else {
+        setStatus(activeSubmission.id, 'archived');
+      }
+      modalOverlay.classList.remove('active');
+    });
+
+    document.getElementById('modal-delete').addEventListener('click', function() {
+      if (!activeSubmission) return;
+      if (confirm('Delete this submission permanently?')) {
+        deleteSubmission(activeSubmission.id);
+        modalOverlay.classList.remove('active');
+      }
+    });
+
+    // ── Status Management (localStorage) ──
+    function setStatus(id, status) {
+      var statusMap = JSON.parse(localStorage.getItem('bb-admin-status') || '{}');
+      statusMap[id] = status;
+      localStorage.setItem('bb-admin-status', JSON.stringify(statusMap));
+
+      var s = submissions.find(function(sub) { return sub.id === id; });
+      if (s) s.status = status;
+
+      updateStats();
+      renderTable();
+    }
+
+    // ── Delete ──
+    async function deleteSubmission(id) {
+      try {
+        await fetch(SUPABASE_URL + '/rest/v1/Form_Submissions?id=eq.' + id, {
+          method: 'DELETE',
+          headers: {
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
+          }
+        });
+        submissions = submissions.filter(function(s) { return s.id !== id; });
+
+        // Clean up status
+        var statusMap = JSON.parse(localStorage.getItem('bb-admin-status') || '{}');
+        delete statusMap[id];
+        localStorage.setItem('bb-admin-status', JSON.stringify(statusMap));
+
+        updateStats();
+        renderTable();
+      } catch (err) {
+        alert('Failed to delete. Check your Supabase permissions.');
+      }
+    }
+
+    // ── Filters ──
+    document.querySelectorAll('.filter-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        renderTable();
+      });
+    });
+
+    // ── Search ──
+    document.getElementById('search-input').addEventListener('input', function(e) {
+      searchQuery = e.target.value;
+      renderTable();
+    });
+
+    // ── Sorting ──
+    document.querySelectorAll('.table-header-cell[data-sort]').forEach(function(cell) {
+      cell.addEventListener('click', function() {
+        var key = cell.dataset.sort;
+        if (currentSort.key === key) {
+          currentSort.dir = currentSort.dir === 'asc' ? 'desc' : 'asc';
+        } else {
+          currentSort.key = key;
+          currentSort.dir = 'asc';
+        }
+        // Update header UI
+        document.querySelectorAll('.table-header-cell').forEach(function(c) {
+          c.classList.remove('sorted');
+          var arrow = c.querySelector('.sort-arrow');
+          if (arrow) arrow.textContent = '';
+        });
+        cell.classList.add('sorted');
+        var arrow = cell.querySelector('.sort-arrow');
+        if (!arrow) {
+          arrow = document.createElement('span');
+          arrow.className = 'sort-arrow';
+          cell.appendChild(arrow);
+        }
+        arrow.textContent = currentSort.dir === 'asc' ? '▲' : '▼';
+        renderTable();
+      });
+    });
+
+    // ── Refresh ──
+    document.getElementById('refresh-btn').addEventListener('click', function() {
+      var btn = this;
+      btn.classList.add('spinning');
+      fetchSubmissions().then(function() {
+        setTimeout(function() { btn.classList.remove('spinning'); }, 500);
+      });
+    });
+
+    // ── Keyboard shortcut: Escape to close modal ──
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+        modalOverlay.classList.remove('active');
+        activeSubmission = null;
+      }
+    });
+
+    // ── Init ──
+    checkAuth();
+  </script>
+</body>
+</html>
