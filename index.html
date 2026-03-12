@@ -1106,6 +1106,69 @@
       box-shadow: 0 1px 8px var(--shadow-card);
     }
 
+    /* ── Team Section ── */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .team-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+    }
+    .team-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 40px var(--shadow-card);
+    }
+    .team-card-img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(30%);
+      transition: filter 0.3s ease;
+    }
+    .team-card:hover .team-card-img {
+      filter: grayscale(0%);
+    }
+    .team-card-info {
+      padding: 14px 16px;
+    }
+    .team-card-name {
+      font-family: var(--font-display);
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 2px;
+    }
+    .team-card-role {
+      font-size: 0.72rem;
+      color: var(--gold);
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+    .team-card-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: var(--gold);
+      color: #000;
+      font-size: 0.55rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    [data-theme="light"] .team-card {
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+
     @media (max-width: 600px) {
       .morph-container[data-layout="grid"] {
         grid-template-columns: 1fr;
@@ -1235,6 +1298,7 @@
       .about-grid { grid-template-columns: 1fr; gap: 48px; }
       .about-text { text-align: center; }
       .about-text .section-body { margin-left: auto; margin-right: auto; }
+      .team-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; }
       .features-grid { grid-template-columns: repeat(2, 1fr); }
       .feature-item:nth-child(2),
       .feature-item:nth-child(4),
@@ -1264,6 +1328,10 @@
       .about-stats { gap: 14px; }
       .stat-card { padding: 22px 16px; }
       .stat-number { font-size: 2rem; }
+      .team-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+      .team-card-name { font-size: 0.85rem; }
+      .team-card-role { font-size: 0.68rem; }
+      .team-card-info { padding: 12px 14px; }
       .features-grid { grid-template-columns: 1fr; }
       .feature-item { border-right: none !important; border-left: none !important; border-bottom: 1px solid var(--feature-border); }
       .feature-item:last-child { border-bottom: none; }
@@ -1288,6 +1356,12 @@
 
     /* ── Responsive: Mobile (480px) ── */
     @media (max-width: 480px) {
+      .team-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 32px; }
+      .team-card { border-radius: 12px; }
+      .team-card-info { padding: 10px 12px; }
+      .team-card-name { font-size: 0.8rem; }
+      .team-card-role { font-size: 0.62rem; }
+      .team-card-badge { font-size: 0.5rem; padding: 2px 6px; top: 8px; right: 8px; }
       .hero { padding: 90px 16px 40px; }
       .hero-heading { font-size: clamp(2rem, 8vw, 2.6rem); }
       .hero-tagline { font-size: 0.9rem; }
@@ -1398,6 +1472,10 @@
       <a href="#about" class="dock-item" data-section="about">
         <span class="dock-label">About</span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </a>
+      <a href="#team" class="dock-item" data-section="team">
+        <span class="dock-label">Team</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
       </a>
       <a href="contact.html" class="dock-item" data-section="contact">
         <span class="dock-label">Contact</span>
@@ -1624,6 +1702,140 @@
           </div>
           <div class="feature-title-wrap"><span class="feature-title">Designed for Humans</span></div>
           <p class="feature-desc">AI that feels human — intuitive, contextual, and genuinely helpful.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Team -->
+  <section class="section team" id="team">
+    <div class="section-inner">
+      <span class="section-label reveal">Our Team</span>
+      <h2 class="section-heading reveal reveal-d1">Meet the People<br>Behind BriarBear.</h2>
+      <div class="team-grid reveal reveal-d2">
+
+        <div class="team-card">
+          <div class="team-card-badge">CEO</div>
+          <img class="team-card-img" src="https://ui-avatars.com/api/?name=Jake+Parks&background=c8a04a&color=080808&size=300&font-size=0.4&bold=true" alt="Jake Parks">
+          <div class="team-card-info">
+            <div class="team-card-name">Jake Parks</div>
+            <div class="team-card-role">Chief Executive Officer</div>
+          </div>
+        </div>
+
+        <div class="team-card">
+          <img class="team-card-img" src="https://ui-avatars.com/api/?name=Yancy+Nacion&background=1a1714&color=c8a04a&size=300&font-size=0.4&bold=true" alt="Yancy Nacion">
+          <div class="team-card-info">
+            <div class="team-card-name">Yancy Nacion</div>
+            <div class="team-card-role">Founder</div>
+          </div>
+        </div>
+
+        <div class="team-card">
+          <img class="team-card-img" src="https://ui-avatars.com/api/?name=Daniel+Delfino&background=1a1714&color=c8a04a&size=300&font-size=0.4&bold=true" alt="Daniel Delfino">
+          <div class="team-card-info">
+            <div class="team-card-name">Daniel Delfino</div>
+            <div class="team-card-role">Developer</div>
+          </div>
+        </div>
+
+        <div class="team-card">
+          <img class="team-card-img" src="https://ui-avatars.com/api/?name=Bea+Yukdawan&background=1a1714&color=c8a04a&size=300&font-size=0.4&bold=true" alt="Bea Yukdawan">
+          <div class="team-card-info">
+            <div class="team-card-name">Bea Yukdawan</div>
+            <div class="team-card-role">Team Member</div>
+          </div>
+        </div>
+
+        <div class="team-card">
+          <img class="team-card-img" src="https://ui-avatars.com/api/?name=Andrei+Gail+Lumbas&background=1a1714&color=c8a04a&size=300&font-size=0.4&bold=true" alt="Andrei Gail Lumbas">
+          <div class="team-card-info">
+            <div class="team-card-name">Andrei Gail Lumbas</div>
+            <div class="team-card-role">Team Member</div>
+          </div>
+        </div>
+
+        <div class="team-card">
+          <img class="team-card-img" src="https://ui-avatars.com/api/?name=Axel+Balitaan&background=1a1714&color=c8a04a&size=300&font-size=0.4&bold=true" alt="Axel Balitaan">
+          <div class="team-card-info">
+            <div class="team-card-name">Axel Balitaan</div>
+            <div class="team-card-role">Team Member</div>
+          </div>
+        </div>
+
+        <div class="team-card">
+          <img class="team-card-img" src="https://ui-avatars.com/api/?name=Francis+Franco&background=1a1714&color=c8a04a&size=300&font-size=0.4&bold=true" alt="Francis Franco">
+          <div class="team-card-info">
+            <div class="team-card-name">Francis Franco</div>
+            <div class="team-card-role">Team Member</div>
+          </div>
+        </div>
+
+        <div class="team-card">
+          <img class="team-card-img" src="https://ui-avatars.com/api/?name=Hannah+Baldoza&background=1a1714&color=c8a04a&size=300&font-size=0.4&bold=true" alt="Hannah Baldoza">
+          <div class="team-card-info">
+            <div class="team-card-name">Hannah Baldoza</div>
+            <div class="team-card-role">Team Member</div>
+          </div>
+        </div>
+
+        <div class="team-card">
+          <img class="team-card-img" src="https://ui-avatars.com/api/?name=Jeric+Narte&background=1a1714&color=c8a04a&size=300&font-size=0.4&bold=true" alt="Jeric Narte">
+          <div class="team-card-info">
+            <div class="team-card-name">Jeric Narte</div>
+            <div class="team-card-role">Team Member</div>
+          </div>
+        </div>
+
+        <div class="team-card">
+          <img class="team-card-img" src="https://ui-avatars.com/api/?name=Jona+Carpio&background=1a1714&color=c8a04a&size=300&font-size=0.4&bold=true" alt="Jona Carpio">
+          <div class="team-card-info">
+            <div class="team-card-name">Jona Carpio</div>
+            <div class="team-card-role">Team Member</div>
+          </div>
+        </div>
+
+        <div class="team-card">
+          <img class="team-card-img" src="https://ui-avatars.com/api/?name=Lila+Mendez&background=1a1714&color=c8a04a&size=300&font-size=0.4&bold=true" alt="Lila Mendez">
+          <div class="team-card-info">
+            <div class="team-card-name">Lila Mendez</div>
+            <div class="team-card-role">Team Member</div>
+          </div>
+        </div>
+
+        <div class="team-card">
+          <img class="team-card-img" src="https://ui-avatars.com/api/?name=Marius+Barcenas&background=1a1714&color=c8a04a&size=300&font-size=0.4&bold=true" alt="Marius Barcenas">
+          <div class="team-card-info">
+            <div class="team-card-name">Marius Barcenas</div>
+            <div class="team-card-role">Team Member</div>
+          </div>
+        </div>
+
+        <div class="team-card">
+          <img class="team-card-img" src="https://ui-avatars.com/api/?name=Rexcy+John&background=1a1714&color=c8a04a&size=300&font-size=0.4&bold=true" alt="Rexcy John">
+          <div class="team-card-info">
+            <div class="team-card-name">Rexcy John</div>
+            <div class="team-card-role">Team Member</div>
+          </div>
+        </div>
+
+        <div class="team-card">
+          <img class="team-card-img" src="https://ui-avatars.com/api/?name=Sofia+Mae+Bacang&background=1a1714&color=c8a04a&size=300&font-size=0.4&bold=true" alt="Sofia Mae Bacang">
+          <div class="team-card-info">
+            <div class="team-card-name">Sofia Mae Bacang</div>
+            <div class="team-card-role">Team Member</div>
+          </div>
+        </div>
+
+        <div class="team-card">
+          <img class="team-card-img" src="https://ui-avatars.com/api/?name=Trisha+Denise+Garas&background=1a1714&color=c8a04a&size=300&font-size=0.4&bold=true" alt="Trisha Denise Garas">
+          <div class="team-card-info">
+            <div class="team-card-name">Trisha Denise Garas</div>
+            <div class="team-card-role">Team Member</div>
+          </div>
         </div>
 
       </div>
@@ -2149,7 +2361,7 @@
     /* ── Dock: active section tracking ── */
     (function() {
       const navLinks = document.querySelectorAll('.dock-item[data-section]');
-      const sections = ['hero', 'projects', 'about'];
+      const sections = ['hero', 'projects', 'about', 'team'];
       const sectionEls = sections.map(id => document.getElementById(id)).filter(Boolean);
 
       const sectionObs = new IntersectionObserver((entries) => {
